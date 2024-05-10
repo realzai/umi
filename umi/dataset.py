@@ -1,22 +1,22 @@
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 from datasets import load_dataset
 from torchvision import transforms
-from .config import Config
+from.config import Config
 
 
 class TrainData(Dataset):
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, shuffle=True):
         self.loaded_data = load_dataset("zaibutcooler/beauty")
-        self.images = self.loaded_data["train"]["images"]
-        self.labels = self.loaded_data["train"]["labels"]
-        self.transform = transforms.Compose(
-            [
-                transforms.ToTensor(),
-                transforms.Resize(config.img_size),
-                # TODO double check the code
-                transforms.Grayscale() if config.gray_scale else None,
-            ]
-        )
+        self.images = self.loaded_data["train"]["image"]
+        self.labels = self.loaded_data["train"]["label"]
+        self.transform = transforms.Compose([
+            transforms.Resize(80),  # args.image_size + 1/4 *args.image_size
+            transforms.RandomResizedCrop(config.image_size, scale=(0.8, 1.0)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ])
+        self.batch_size = config.batch_size
+        self.shuffle = shuffle
 
     def __len__(self):
         return len(self.images)
@@ -25,3 +25,6 @@ class TrainData(Dataset):
         img, label = self.images[index], self.labels[index]
         img = self.transform(img)
         return img, label
+
+    def get_data_loader(self):
+        return DataLoader(self, batch_size=self.batch_size, shuffle=self.shuffle)
