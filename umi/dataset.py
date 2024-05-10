@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset, DataLoader
 from datasets import load_dataset
 from torchvision import transforms
-from.config import Config
+from .config import Config
 
 
 class TrainData(Dataset):
@@ -9,12 +9,14 @@ class TrainData(Dataset):
         self.loaded_data = load_dataset("zaibutcooler/beauty")
         self.images = self.loaded_data["train"]["image"]
         self.labels = self.loaded_data["train"]["label"]
-        self.transform = transforms.Compose([
-            transforms.Resize(80),  # args.image_size + 1/4 *args.image_size
-            transforms.RandomResizedCrop(config.image_size, scale=(0.8, 1.0)),
-            transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-        ])
+        self.transform = transforms.Compose(
+            [
+                transforms.Resize(80),  # args.image_size + 1/4 *args.image_size
+                transforms.RandomResizedCrop(config.image_size, scale=(0.8, 1.0)),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ]
+        )
         self.batch_size = config.batch_size
         self.shuffle = shuffle
 
