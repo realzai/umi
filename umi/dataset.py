@@ -6,7 +6,7 @@ from .config import Config
 
 class TrainData(Dataset):
     def __init__(self, config: Config, shuffle=True):
-        self.loaded_data = load_dataset("zaibutcooler/beauty")
+        self.loaded_data = load_dataset("zaibutcooler/pokemons")
         self.images = self.loaded_data["train"]["image"]
         self.labels = self.loaded_data["train"]["label"]
         self.transform = transforms.Compose(
