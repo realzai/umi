@@ -1,6 +1,8 @@
 from torchvision import transforms
 
 class Config:
+    epochs :int = 4
+
     transform = transforms.Compose([
         transforms.Resize(32),
         transforms.CenterCrop(32),
