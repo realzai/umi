@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 
+
 class CIFAR10Dataset(Dataset):
     def __init__(self, dataset, transform=None):
         self.dataset = dataset
