@@ -32,3 +32,5 @@ class Config:
             transforms.Normalize([0.5], [0.5]),  # Normalize to [-1, 1]
         ]
     )
+
+    num_train_steps = 1000

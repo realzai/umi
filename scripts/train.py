@@ -16,7 +16,7 @@ if __name__ == "__main__":
     dataset = CIFAR10Dataset(dataset, transform=config.transform)
     dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
 
-    noise_scheduler = DDPMScheduler(num_train_timesteps=1000)
+    noise_scheduler = DDPMScheduler(num_train_timesteps=config.num_train_steps)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
     accelerator = Accelerator()
