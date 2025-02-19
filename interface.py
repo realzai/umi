@@ -24,4 +24,4 @@ if st.button("Generate Images"):
     cols = st.columns(batch_size)
     for i, img in enumerate(images):
         with cols[i]:
-            st.image(Image.fromarray(img), use_column_width=True)
+            st.image(img, use_column_width=True)
