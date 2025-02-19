@@ -8,11 +8,9 @@ if __name__ == "__main__":
     pipeline = DDPMPipeline(
         unet=model,
         scheduler=scheduler,
-        safety_checker=None,
-        requires_safety_checker=False,
     )
 
-    images = pipeline.run(batch_size=4).images
+    images = pipeline(batch_size=4).images
 
     for i, img in enumerate(images):
         plt.subplot(1, 4, i + 1)
