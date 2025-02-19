@@ -23,9 +23,6 @@ env/
 # Ignore datasets directory if you store large datasets
 data/
 
-# Ignore model outputs
-models/
-
 # Ignore environment configuration files
 .env
 
