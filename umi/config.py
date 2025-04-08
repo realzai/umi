@@ -1,46 +1,36 @@
-import torch
+from torchvision import transforms
+from typing import Tuple
 
 
 class Config:
-    def __init__(
-        self,
-        lr=3e-4,
-        num_epochs=300,
-        img_size=64,
-        gray_scale=False,
-        channels=3,
-        noise_steps=1000,
-        beta_start=1e-4,
-        beta_end=0.02,
-        # TODO get number of classes of the dataset
-        num_classes=10,
-        out_dir="out",
-        time_dim=256,
-        batch_size=14,
-    ):
-        self.img_size: int = img_size
-        self.gray_scale: bool = gray_scale
-        self.channels: int = channels
+    epochs: int = 4
 
-        self.noise_steps = noise_steps
-        self.beta_start = beta_start
-        self.beta_end = beta_end
+    sample_size: int = 32
+    in_channels: int = 3
+    out_channels: int = 3
+    layers_per_block: int = 2
+    block_out_channels: Tuple = (128, 128, 256, 256)
 
-        self.beta = self.prepare_noise_schedule().to(self.device)
-        self.alpha = 1.0 - self.beta
-        self.alpha_hat = torch.cumprod(self.alpha, dim=0)
+    down_block_types: Tuple = (
+        "DownBlock2D",
+        "DownBlock2D",
+        "AttnDownBlock2D",
+        "DownBlock2D",
+    )
+    up_block_types: Tuple = (
+        "UpBlock2D",
+        "AttnUpBlock2D",
+        "UpBlock2D",
+        "UpBlock2D",
+    )
 
-        self.img_size = img_size
-        self.batch_size = batch_size
-        self.deivce = "cuda" if torch.cuda.is_available() else "cpu"
-        self.out_dir = out_dir
+    transform = transforms.Compose(
+        [
+            transforms.Resize(32),
+            transforms.CenterCrop(32),
+            transforms.ToTensor(),
+            transforms.Normalize([0.5], [0.5]),  # Normalize to [-1, 1]
+        ]
+    )
 
-        self.num_classes = num_classes
-        self.num_epochs = num_epochs
-        self.lr = lr
-        self.time_dim = time_dim
-
-
-tiny_config = Config()
-
-base_config = Config()
+    num_train_steps = 1000

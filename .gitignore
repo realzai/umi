@@ -10,7 +10,7 @@ env/
 # Jupyter Notebook
 .ipynb_checkpoints/
 
-# Model artifacts and data files
+# Model artifacts and datasets files
 *.h5
 *.pkl
 *.npy
@@ -20,11 +20,8 @@ env/
 # Logs
 *.log
 
-# Ignore data directory if you store large datasets
+# Ignore datasets directory if you store large datasets
 data/
-
-# Ignore model outputs
-models/
 
 # Ignore environment configuration files
 .env
@@ -32,3 +29,5 @@ models/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+.idea
